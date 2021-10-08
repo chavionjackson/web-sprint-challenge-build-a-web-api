@@ -1,17 +1,20 @@
-const express = require('express');
+const express = require("express");
 const server = express();
+const actionsRouter = require("./actions/actions-router");
 
-server.use(express.json())
+server.use(express.json());
+server.use("/api/actions", actionsRouter);
+server.use(express.json());
 server.use((err, req, res, next) => {
-    console.log(err)
-    res.status(500).json({
-        message: "Something went nwrong, please try again!"
-    })
-})
+  console.log(err);
+  res.status(500).json({
+    message: "Something went nwrong, please try again!",
+  });
+});
 
-server.get('/', (req, res) => {
-    res.status(200).json({ api: "Hello Chevy!" })
-})
+server.get("/", (req, res) => {
+  res.status(200).json({ api: "Hello Chevy!" });
+});
 
 // Configure your server here
 // Build your actions router in /api/actions/actions-router.js
