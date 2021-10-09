@@ -6,8 +6,7 @@ const Projects = require("./projects-model");
 
 //GET ALL PROJECTS
 router.get("/", (req, res, next) => {
-  Projects
-    .get()
+  Projects.get()
     .then((pro) => {
       res.status(200).json(pro);
     })
@@ -21,11 +20,24 @@ router.get("/:id", validProjectId(), (req, res) => {
 
 //POST NEW PROJECT
 router.post("/", validProPost(), (req, res, next) => {
-    Projects.insert(req.body)
+  Projects.insert(req.body)
     .then((pro) => {
-        res.status(201).json(pro)
+      res.status(201).json(pro);
     })
-    .catch(next)
-})
+    .catch(next);
+});
+
+//UPDATES POST
+router.put("/:id", validProjectId(), validProPost(), (req, res, next) => {
+  Projects.update(req.params.id, req.body)
+    .then((pro) => {
+        if(pro) {
+            res.status(400).json(pro)
+        } else {
+            res.status(200).json()
+        }
+    })
+    .catch(next);
+});
 
 module.exports = router;

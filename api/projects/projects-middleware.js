@@ -26,7 +26,7 @@ function validProPost() {
     }
     if (!req.body.name || !req.body.description) {
       return res.status(400).json({
-        message: "missing required data",
+        message: "missing required field",
       });
     }
     next();
