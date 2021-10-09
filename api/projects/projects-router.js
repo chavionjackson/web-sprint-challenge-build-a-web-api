@@ -41,14 +41,22 @@ router.put("/:id", validProjectId(), validProPost(), (req, res, next) => {
 });
 
 //DELETES POST
-router.delete('/:id', validProjectId(), (req, res, next) => {
-    Projects.remove(req.params.id)
-    .then(pro => {
-        if(pro) {
-            res.status(200).json()
-        }
+router.delete("/:id", validProjectId(), (req, res, next) => {
+  Projects.remove(req.params.id)
+    .then((pro) => {
+      if (pro) {
+        res.status(200).json();
+      }
     })
-    .catch(next)
-})
+    .catch(next);
+});
+
+router.get("/:id/actions", validProjectId(), (req, res, next) => {
+  Projects.getProjectActions(req.params.id)
+    .then((act) => {
+      res.status(200).json(act);
+    })
+    .catch(next);
+});
 
 module.exports = router;
