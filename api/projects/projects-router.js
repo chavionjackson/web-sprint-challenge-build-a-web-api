@@ -31,13 +31,24 @@ router.post("/", validProPost(), (req, res, next) => {
 router.put("/:id", validProjectId(), validProPost(), (req, res, next) => {
   Projects.update(req.params.id, req.body)
     .then((pro) => {
-        if(pro) {
-            res.status(400).json(pro)
-        } else {
-            res.status(200).json()
-        }
+      if (pro) {
+        res.status(400).json(pro);
+      } else {
+        res.status(200).json();
+      }
     })
     .catch(next);
 });
+
+//DELETES POST
+router.delete('/:id', validProjectId(), (req, res, next) => {
+    Projects.remove(req.params.id)
+    .then(pro => {
+        if(pro) {
+            res.status(200).json()
+        }
+    })
+    .catch(next)
+})
 
 module.exports = router;
