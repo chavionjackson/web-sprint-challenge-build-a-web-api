@@ -17,4 +17,20 @@ function validProjectId() {
   };
 }
 
-module.exports = { validProjectId };
+function validProPost() {
+  return (req, res, next) => {
+    if (!req.body) {
+      return res.status(400).json({
+        message: "missing project data",
+      });
+    }
+    if (!req.body.name || !req.body.description) {
+      return res.status(400).json({
+        message: "missing required data",
+      });
+    }
+    next();
+  };
+}
+
+module.exports = { validProjectId, validProPost };

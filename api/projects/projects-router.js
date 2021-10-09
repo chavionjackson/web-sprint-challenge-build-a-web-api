@@ -1,11 +1,12 @@
 // Write your "projects" router here!
 const express = require("express");
-const { validProjectId } = require("./projects-middleware");
+const { validProjectId, validProPost } = require("./projects-middleware");
 const router = express.Router();
-const projects = require("./projects-model");
+const Projects = require("./projects-model");
 
+//GET ALL PROJECTS
 router.get("/", (req, res, next) => {
-  projects
+  Projects
     .get()
     .then((pro) => {
       res.status(200).json(pro);
@@ -13,8 +14,18 @@ router.get("/", (req, res, next) => {
     .catch(next);
 });
 
+//GET PROJECT BY ID
 router.get("/:id", validProjectId(), (req, res) => {
   res.status(200).json(req.pro);
 });
+
+//POST NEW PROJECT
+router.post("/", validProPost(), (req, res, next) => {
+    Projects.insert(req.body)
+    .then((pro) => {
+        res.status(201).json(pro)
+    })
+    .catch(next)
+})
 
 module.exports = router;
