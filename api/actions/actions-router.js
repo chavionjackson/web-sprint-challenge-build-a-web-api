@@ -4,7 +4,7 @@ const { validActionsId, validActionPost } = require("./actions-middlware");
 const router = express.Router();
 const Actions = require("./actions-model");
 
-//GET ALL PROJECTS
+//GET ALL ACTIONS
 router.get("/", (req, res, next) => {
   Actions.get()
     .then((act) => {
@@ -13,12 +13,12 @@ router.get("/", (req, res, next) => {
     .catch(next);
 });
 
-//GET PROJECT BY ID
+//GET ACTION BY ID
 router.get("/:id", validActionsId(), (req, res) => {
   res.status(200).json(req.act);
 });
 
-//POST NEW PROJECT
+//POST NEW ACTION
 router.post("/", validActionPost(), (req, res, next) => {
   Actions.insert(req.body)
     .then((pro) => {
@@ -47,15 +47,6 @@ router.delete("/:id", validActionsId(), (req, res, next) => {
       if (act) {
         res.status(200).json();
       }
-    })
-    .catch(next);
-});
-
-//GET ACTIONS BY ID
-router.get("/:id/actions", validActionsId(), (req, res, next) => {
-  Actions.getProjectActions(req.params.id)
-    .then((act) => {
-      res.status(200).json(act);
     })
     .catch(next);
 });
